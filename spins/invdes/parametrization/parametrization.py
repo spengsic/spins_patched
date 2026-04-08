@@ -324,7 +324,7 @@ class CubicParam(Parametrization):
 
         import matplotlib.pyplot as plt
         cs = plt.contour(x_extended, y_extended, phi_extended - 0.5, [0])
-        paths = cs.collections[0].get_paths()
+        paths = cs.get_paths()
 
         return [p.to_polygons()[0] for p in paths]
 

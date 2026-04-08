@@ -35,7 +35,7 @@ from spins.invdes.problem_graph import optplan
 from spins.invdes.problem_graph import workspace
 
 # If `True`, also minimize the back-reflection.
-MINIMIZE_BACKREFLECTION = False
+MINIMIZE_BACKREFLECTION = True
 # If 'True`, runs an additional `cont_iters' of continuous optimization with
 # discreteness permittivity biasing penalty added.
 # Fine-tuning the `intial_value' of `disc_scaling may be necessary depending
@@ -61,7 +61,7 @@ def run_opt(save_folder: str, grating_len: float, wg_width: float) -> None:
         grating_len=grating_len,
         box_thickness=2000,
         wg_thickness=wg_thickness,
-        etch_frac=0.5,
+        etch_frac=0.545,
         wg_width=wg_width)
     obj, monitors = create_objective(
         sim_space, wg_thickness=wg_thickness, grating_len=grating_len)
@@ -90,7 +90,7 @@ def create_sim_space(
         gds_fg_name: str,
         gds_bg_name: str,
         grating_len: float = 12000,
-        etch_frac: float = 0.5,
+        etch_frac: float = 0.545,
         box_thickness: float = 2000,
         wg_width: float = 12000,
         wg_thickness: float = 220,
@@ -133,8 +133,8 @@ def create_sim_space(
     # KLayout).
 
     # Declare some constants to represent the different layers.
-    LAYER_SILICON_ETCHED = 100
-    LAYER_SILICON_NONETCHED = 101
+    LAYER_SILICON_ETCHED = 3
+    LAYER_SILICON_NONETCHED = 4
 
     # Create rectangles corresponding to the waveguide, the BOX layer, and the
     # design region. We extend the rectangles outside the simulation region
@@ -395,7 +395,7 @@ def create_transformations(
         cont_iters: int,
         disc_iters: int,
         sim_space: optplan.SimulationSpaceBase,
-        min_feature: float = 100,
+        min_feature: float = 300,
         cont_to_disc_factor: float = 1.1,
 ) -> List[optplan.Transformation]:
     """Creates a list of transformations for the optimization.

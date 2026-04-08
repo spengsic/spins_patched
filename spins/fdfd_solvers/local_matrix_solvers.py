@@ -100,14 +100,7 @@ class MultiprocessingSolver(LocalMatrixSolver):
         if num_processes == 0:
             num_processes = multiprocessing.cpu_count()
 
-        # Handle SIGINT properly by ignoring in the worker processes.
-        # See https://stackoverflow.com/questions/11312525/catch-ctrlc-sigint-and-exit-multiprocesses-gracefully-in-python
-        # for details.
-        import signal
-        original_sigint_handler = signal.signal(signal.SIGINT, signal.SIG_IGN)
         self.pool = multiprocessing.Pool(num_processes)
-        signal.signal(signal.SIGINT, original_sigint_handler)
-
         self.solver = wrapped_solvee
 
     def solve_matrix_equation(self, A: scipy.sparse.csr_matrix, b: np.ndarray):

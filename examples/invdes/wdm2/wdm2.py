@@ -58,7 +58,7 @@ def main() -> None:
     # during the optimization are also saved here. This can be changed by
     # passing in a third optional argument.
     plan = optplan.OptimizationPlan(transformations=trans_list)
-    problem_graph.run_plan(plan, ".")
+    problem_graph.run_plan(plan, ".", save_folder="my_results")
 
 
 def create_sim_space(gds_fg: str, gds_bg: str) -> optplan.SimulationSpace:

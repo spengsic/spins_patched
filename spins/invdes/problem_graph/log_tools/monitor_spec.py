@@ -179,5 +179,5 @@ def load_from_yml(filename: str) -> MonitorDescriptionList:
         MonitorDescriptionList object containing the monitor spec information.
     """
     with open(filename) as fp:
-        monitor_descriptions = MonitorDescriptionList(yaml.load(fp))
+        monitor_descriptions = MonitorDescriptionList(yaml.load(fp, Loader=yaml.SafeLoader))
     return monitor_descriptions

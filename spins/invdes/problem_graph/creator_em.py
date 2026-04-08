@@ -20,8 +20,22 @@ from spins.invdes.problem_graph.simspace import SimulationSpace
 
 # Have a single shared direct solver object because we need to use
 # multiprocessing to actually parallelize the solve.
-DIRECT_SOLVER = local_matrix_solvers.MultiprocessingSolver(
-    local_matrix_solvers.DirectSolver())
+# Pool creation is deferred to first use to avoid Windows multiprocessing
+# spawn issues (workers re-import this module during bootstrapping, which
+# would recursively try to create another pool before the first one is ready).
+class _LazyMultiprocessingSolver(local_matrix_solvers.LocalMatrixSolver):
+
+    def __init__(self):
+        self._solver = None
+
+    def solve_matrix_equation(self, A, b):
+        if self._solver is None:
+            self._solver = local_matrix_solvers.MultiprocessingSolver(
+                local_matrix_solvers.DirectSolver())
+        return self._solver.solve_matrix_equation(A, b)
+
+
+DIRECT_SOLVER = _LazyMultiprocessingSolver()
 
 
 @optplan.register_node(optplan.WaveguideModeSource)

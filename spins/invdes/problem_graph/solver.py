@@ -41,7 +41,7 @@ def run_plan(plan: optplan.OptimizationPlan,
     # Make workspace.
     console_logger.info("Setting up workspace.")
     work = workspace.Workspace(project_folder, save_folder)
-
+    
     # Keep track of which transformation we are executing. This exists
     # in order to handle optimization resuming in which we start executing
     # a later transformation.
