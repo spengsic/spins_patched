@@ -4,7 +4,6 @@ The workspace has the following responsibilities:
     1) Creating and caching problem graph node objects.
     2) Handling execution of transformations.
 """
-import collections
 from datetime import datetime
 import glob
 import logging
@@ -56,7 +55,7 @@ class Workspace:
         # TODO(logansu): Accept argument-less variable.
         self._objects[VARIABLE_NODE] = problem.Variable(1)
 
-        if isinstance(nodes, collections.Iterable):
+        if isinstance(nodes, (list, tuple)):
             for node in nodes:
                 self._add_node(node)
         elif nodes:
